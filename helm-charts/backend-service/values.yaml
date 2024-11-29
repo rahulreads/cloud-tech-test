@@ -1,9 +1,9 @@
 image:
-  repository: europe-west2-docker.pkg.dev/my-app-361806/cloud-test/backend-service:latest
+  repository: europe-west2-docker.pkg.dev/my-app-361806/cloud-test/backend-service
   tag: latest
 
 service:
-  type: ClusterIP
+  type: LoadBalancer
   port: 80
 
 resources:
@@ -13,17 +13,3 @@ resources:
   requests:
     cpu: "200m"
     memory: "128Mi"
-
-ingress:
-  enabled: true
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-  hosts:
-    - host: backend-service.example.com
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls:
-    - hosts:
-        - backend-service.example.com
-      secretName: backend-service-tls
