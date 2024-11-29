@@ -1,0 +1,34 @@
+version: '3.3'
+services:
+  backend_service:
+    build:
+      context: ./backend_service
+      dockerfile: Dockerfile
+    container_name: backend_service
+    ports:
+      - "5001:5000"  # Map port 5001 on host to port 5000 in the container
+    environment:
+      - EXTERNAL_INTEGRATION_KEY=your-integration-key
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./backend_service/logs:/app/logs  # Map logs directory for persistence
+    networks:
+      - app_network
+
+  data_service:
+    build:
+      context: ./data_service
+      dockerfile: Dockerfile
+    container_name: data_service
+    ports:
+      - "5002:5000"  # Map port 5002 on host to port 5000 in the container
+    environment:
+      - LOG_DIRECTORY=/app/logs
+    volumes:
+      - ./data_service/logs:/app/logs  # Map logs directory for persistence
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge

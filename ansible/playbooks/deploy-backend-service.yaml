@@ -1,0 +1,6 @@
+- name: Deploy Backend Service
+  hosts: localhost
+  tasks:
+    - name: Deploy Helm Chart
+      command:
+        cmd: helm upgrade --install backend-service ./helm-charts/backend-service -n default

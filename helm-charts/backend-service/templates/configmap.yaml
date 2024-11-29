@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-service-config
+  labels:
+    app: backend-service
+data:
+  LOG_LEVEL: "INFO"                      # Configurable log level
+  EXTERNAL_API_URL: "https://dummy-external-api.com/logs"  # Dummy external API URL

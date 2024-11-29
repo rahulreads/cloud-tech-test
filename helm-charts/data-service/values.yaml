@@ -1,0 +1,27 @@
+image:
+  repository: europe-west2-docker.pkg.dev/my-app-361806/cloud-test/data-service:latest
+  tag: latest
+
+service:
+  type: ClusterIP
+  port: 5000
+
+resources:
+  requests:
+    memory: "128Mi"
+    cpu: "500m"
+  limits:
+    memory: "256Mi"
+    cpu: "1"
+
+replicaCount: 2
+
+ingress:
+  enabled: false
+  annotations: {}
+  hosts:
+    - host: data-service.example.com
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
