@@ -1,0 +1,6 @@
+- name: Deploy Data Service
+  hosts: localhost
+  tasks:
+    - name: Deploy Helm Chart
+      command:
+        cmd: helm upgrade --install data-service ../../helm-charts/data-service -n default
