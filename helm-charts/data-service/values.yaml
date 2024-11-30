@@ -1,6 +1,11 @@
+# Image configuration
 image:
-  repository: europe-west2-docker.pkg.dev/my-app-361806/cloud-test/data-service
-  tag: latest
+  repository: "{{ .Values.repository }}"  # Placeholder for repository; dynamically configured during deployment.
+  tag: "{{ .Values.imageTag }}"           # Placeholder for image tag; dynamically configured during deployment.
+
+# Default repository and tag values
+repository: europe-west2-docker.pkg.dev/my-app-361806/cloud-test/data-service
+imageTag: latest
 
 service:
   type: LoadBalancer
