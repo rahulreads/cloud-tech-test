@@ -1,0 +1,69 @@
+name: CI/CD Pipeline
+# TODO: Not fully implemented, Secrets, Kubeconfig needed to be added.
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Build Docker Image
+        run: |
+          docker build -t ${{ secrets.DOCKER_REGISTRY }}/data-service:${{ github.sha }} .
+          docker tag ${{ secrets.DOCKER_REGISTRY }}/data-service:${{ github.sha }} ${{ secrets.DOCKER_REGISTRY }}/data-service:latest
+
+      - name: Push Docker Image to Registry
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} ${{ secrets.DOCKER_REGISTRY }}
+          docker push ${{ secrets.DOCKER_REGISTRY }}/data-service:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_REGISTRY }}/data-service:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ansible kubectl helm
+
+      - name: Connect to Kubernetes Cluster
+        run: |
+          mkdir -p ~/.kube
+          echo "${{ secrets.KUBECONFIG_CONTENT }}" > ~/.kube/config
+          chmod 600 ~/.kube/config
+          kubectl get nodes  # Test the connection
+
+      - name: Deploy Helm Packages
+        run: |
+          ansible-playbook ansible/playbooks/deploy-backend-service.yaml
+          ansible-playbook ansible/playbooks/deploy-data-service.yaml
+
+  health-check:
+    runs-on: ubuntu-latest
+    needs: deploy
+
+    steps:
+      - name: Run Health Check Script
+        run: bash health_check.sh
+
+  monitor:
+    runs-on: ubuntu-latest
+    needs: deploy
+
+    steps:
+      - name: Monitor Node and Pod Resource Utilization
+        run: |
+          kubectl top nodes
+          kubectl top pods --all-namespaces
+
+      - name: Display Resource Utilization for Specific Label
+        run: |
+          kubectl top pods --all-namespaces --selector=k8s-app=kube-Devops
