@@ -160,14 +160,15 @@ This script automates the process of building Docker images, tagging and pushing
 
 Set the following environment variables before running the script:
 
-| **Variable**            | **Description**                                                                               | **Default**                |
-|--------------------------|-----------------------------------------------------------------------------------------------|----------------------------|
+| **Variable**              | **Description**                                                                               | **Default**                |
+|----------------------------|-----------------------------------------------------------------------------------------------|----------------------------|
+| `DOCKER_IMAGE_BACKEND`     | The Docker repository for the backend service image.                                          | `europe-west2-docker.pkg.dev/my-app-361806/cloud-test/backend-service` |
+| `DOCKER_IMAGE_DATA`        | The Docker repository for the data service image.                                             | `europe-west2-docker.pkg.dev/my-app-361806/cloud-test/data-service` |
 | `DOCKER_IMAGE_TAG_BACKEND` | The tag to use for the backend service Docker image.                                           | `latest`                   |
 | `DOCKER_IMAGE_TAG_DATA`    | The tag to use for the data service Docker image.                                              | `latest`                   |
-| `KUBECONFIG_PATH`         | Path to the kubeconfig file for accessing the Kubernetes cluster.                              | `~/.kube/config`           |
-| `KUBECONFIG_CONTENT`      | The content of the kubeconfig file. Ensure this variable is set for the script to work.         | Content of kubeconfig file |
-| `ANSIBLE_PLAYBOOK_PATH`   | Path to the directory containing Ansible playbooks for Helm deployment.                        | `ansible/playbooks`        |
-
+| `KUBECONFIG_PATH`          | Path to the kubeconfig file for accessing the Kubernetes cluster.                              | `~/.kube/config`           |
+| `KUBECONFIG_CONTENT`       | The content of the kubeconfig file. Ensure this variable is set for the script to work.         | Content of kubeconfig file |
+| `ANSIBLE_PLAYBOOK_PATH`    | Path to the directory containing Ansible playbooks for Helm deployment.                        | `ansible/playbooks`        |
 ---
 
 ### **Config Files**
@@ -190,6 +191,8 @@ Set the following environment variables before running the script:
 1. **Set Environment Variables**:
    - Example:
      ```bash
+     export DOCKER_IMAGE_BACKEND="europe-west2-docker.pkg.dev/my-app-361806/cloud-test/backend-service"
+     export DOCKER_IMAGE_DATA="europe-west2-docker.pkg.dev/my-app-361806/cloud-test/data-service"
      export DOCKER_IMAGE_TAG_BACKEND=v1.0.0
      export DOCKER_IMAGE_TAG_DATA=v1.0.0
      export KUBECONFIG_PATH=$HOME/.kube/config
