@@ -162,8 +162,8 @@ Set the following environment variables before running the script:
 
 | **Variable**              | **Description**                                                                               | **Default**                |
 |----------------------------|-----------------------------------------------------------------------------------------------|----------------------------|
-| `DOCKER_IMAGE_BACKEND`     | The Docker repository for the backend service image.                                          | `europe-west2-docker.pkg.dev/my-app-361806/cloud-test/backend-service` |
-| `DOCKER_IMAGE_DATA`        | The Docker repository for the data service image.                                             | `europe-west2-docker.pkg.dev/my-app-361806/cloud-test/data-service` |
+| `DOCKER_IMAGE_BACKEND`     | The Docker repository for the backend service image.                                          | `europe-west2-docker.pkg.dev/my-app-361806/cloud-test/backend-service` ( GCP artifact registry )|
+| `DOCKER_IMAGE_DATA`        | The Docker repository for the data service image.                                             | `europe-west2-docker.pkg.dev/my-app-361806/cloud-test/data-service` ( GCP artifact registry ) |
 | `DOCKER_IMAGE_TAG_BACKEND` | The tag to use for the backend service Docker image.                                           | `latest`                   |
 | `DOCKER_IMAGE_TAG_DATA`    | The tag to use for the data service Docker image.                                              | `latest`                   |
 | `KUBECONFIG_PATH`          | Path to the kubeconfig file for accessing the Kubernetes cluster.                              | `~/.kube/config`           |
