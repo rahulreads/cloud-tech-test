@@ -148,6 +148,12 @@ This script automates the process of building Docker images, tagging and pushing
 4. **Ansible Configuration**:
    - Verify that the Ansible playbooks (`deploy-backend-service.yaml` and `deploy-data-service.yaml`) are correctly configured in the path specified by the `ANSIBLE_PLAYBOOK_PATH` variable.
 
+5. **Metrics Server**:
+   - Install Metrics Server to monitor resource utilization:
+     ```bash
+     kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+     kubectl rollout status -n kube-system deployment/metrics-server
+
 ---
 
 ### **Environment Variables**
