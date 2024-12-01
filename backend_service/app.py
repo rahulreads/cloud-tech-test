@@ -41,22 +41,6 @@ def call_external_api():
         logger.error(f"Error calling external API: {e}")
         return {"error": str(e)}, 500
 
-# Routes
-@app.route('/api_1', methods=['GET'])
-def api_1():
-    start_time = time.time()
-    log_message = random.choice(["Success", "Created", "Failed"])
-    logger.info(f"Processing API 1: {log_message}")
-
-    # Simulate work
-    time.sleep(0.5)
-
-    # Record metrics
-    REQUEST_COUNT.labels('GET', '/api_1', 200).inc()
-    REQUEST_LATENCY.labels('GET', '/api_1').observe(time.time() - start_time)
-
-    return jsonify({"message": "API 1 completed", "log": log_message}), 200
-
 @app.route('/download_external_logs', methods=['GET'])
 def download_external_logs():
     start_time = time.time()

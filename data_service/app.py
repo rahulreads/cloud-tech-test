@@ -62,8 +62,12 @@ def process_api():
     # Write the log to a file
     file_name = f"log_{int(time.time())}.txt"
     file_path = os.path.join(LOG_DIRECTORY, file_name)
-    write_to_file(file_path, log_message)
-    logger.info(f"Log written to file: {file_path}")
+
+    try:
+        write_to_file(file_path, log_message)
+        logger.info(f"Log written to file: {file_path}")
+    except IOError as e:
+        logging.error(f"Failed to write log file: {e}")
     
     # Record Prometheus metrics
     REQUEST_COUNT.labels('GET', '/', 200).inc()
