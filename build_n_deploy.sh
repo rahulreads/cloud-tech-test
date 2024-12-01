@@ -7,8 +7,8 @@ set -x
 DOCKER_IMAGE_BACKEND="${DOCKER_IMAGE_BACKEND:-europe-west2-docker.pkg.dev/my-app-361806/cloud-test/backend-service}"
 DOCKER_IMAGE_DATA="${DOCKER_IMAGE_BACKEND:-europe-west2-docker.pkg.dev/my-app-361806/cloud-test/data-service}"
 
-DOCKER_IMAGE_TAG_BACKEND="${DOCKER_IMAGE_TAG_BACKEND:-latest}"  # Tag for backend service
-DOCKER_IMAGE_TAG_DATA="${DOCKER_IMAGE_TAG_DATA:-latest}"       # Tag for data service
+DOCKER_IMAGE_TAG_BACKEND="${DOCKER_IMAGE_TAG_BACKEND:-latest}"  # Tag for backend service default is my own GCP artifact registry
+DOCKER_IMAGE_TAG_DATA="${DOCKER_IMAGE_TAG_DATA:-latest}"       # Tag for data service default is my own GCP artifact registry
 IMAGE_LIST_FILE="./image_list.txt"  # File to store image names
 KUBECONFIG_PATH="${KUBECONFIG_PATH:-$HOME/.kube/config}"
 KUBECONFIG_CONTENT="$(cat $HOME/.kube/config)"
