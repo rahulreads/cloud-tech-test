@@ -1,6 +1,7 @@
+# Image configuration
 image:
   repository: europe-west2-docker.pkg.dev/my-app-361806/cloud-test/backend-service
-  tag: latest
+  imageTag: latest
 
 service:
   type: LoadBalancer
@@ -13,3 +14,26 @@ resources:
   requests:
     cpu: "200m"
     memory: "128Mi"
+
+environment:
+  mode: dev
+
+
+rbac:
+  enabled: true
+  roles:
+    - apiGroups: [""]
+      resources: ["pods", "services", "configmaps"]
+      verbs: ["get", "list", "watch"]
+    - apiGroups: [""]
+      resources: ["secrets"]
+      verbs: ["get"]
+serviceAccount:
+  create: true
+  name: ""
+
+
+
+
+
+

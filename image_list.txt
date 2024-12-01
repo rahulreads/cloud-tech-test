@@ -1,0 +1,2 @@
+cloud-tech-test-1_data_service:latest
+cloud-tech-test-1_backend_service:latest

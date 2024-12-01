@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: data-service-sa
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: data-service-role
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "services", "endpoints", "configmaps"]
+    verbs: ["get", "list", "watch", "create", "update", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: data-service-rolebinding
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: data-service-role
+subjects:
+  - kind: ServiceAccount
+    name: data-service-sa
+    namespace: {{ .Release.Namespace }}

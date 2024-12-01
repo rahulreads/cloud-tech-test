@@ -1,11 +1,7 @@
 # Image configuration
 image:
-  repository: "{{ .Values.repository }}"  # Placeholder for repository; dynamically configured during deployment.
-  tag: "{{ .Values.imageTag }}"           # Placeholder for image tag; dynamically configured during deployment.
-
-# Default repository and tag values
-repository: europe-west2-docker.pkg.dev/my-app-361806/cloud-test/data-service
-imageTag: latest
+  repository: europe-west2-docker.pkg.dev/my-app-361806/cloud-test/data-service
+  imageTag: latest
 
 service:
   type: LoadBalancer
@@ -18,3 +14,19 @@ resources:
   limits:
     memory: "256Mi"
     cpu: "1"
+
+environment:
+  mode: dev
+
+rbac:
+  enabled: true
+  roles:
+    - apiGroups: [""]
+      resources: ["pods", "services", "configmaps"]
+      verbs: ["get", "list", "watch"]
+    - apiGroups: [""]
+      resources: ["secrets"]
+      verbs: ["get"]
+serviceAccount:
+  create: true
+  name: ""

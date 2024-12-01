@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -x
 # Fetch the external IP of the LoadBalancer service
 EXTERNAL_IP=$(kubectl get svc backend-service -n default -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 

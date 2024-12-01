@@ -15,16 +15,17 @@ spec:
         app: backend-service
     spec:
       imagePullSecrets:
-      - name: artifact-registry-secret  
+        - name: artifact-registry-secret
+      serviceAccountName: backend-service-sa
       containers:
-      - name: backend-service
-        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
-        ports:
-        - containerPort: {{ .Values.service.port }}
-        resources:
-          requests:
-            memory: {{ .Values.resources.requests.memory }}
-            cpu: {{ .Values.resources.requests.cpu }}
-          limits:
-            memory: {{ .Values.resources.limits.memory }}
-            cpu: {{ .Values.resources.limits.cpu }}
+        - name: backend-service
+          image: "{{ .Values.image.repository }}:{{ .Values.image.imageTag }}"
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          resources:
+            requests:
+              memory: "{{ .Values.resources.requests.memory }}"
+              cpu: "{{ .Values.resources.requests.cpu }}"
+            limits:
+              memory: "{{ .Values.resources.limits.memory }}"
+              cpu: "{{ .Values.resources.limits.cpu }}"

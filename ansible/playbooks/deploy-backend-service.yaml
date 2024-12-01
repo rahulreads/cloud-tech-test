@@ -1,6 +1,26 @@
 - name: Deploy Backend Service
   hosts: localhost
   tasks:
-    - name: Deploy Helm Chart
+    - name: Validate Helm installation
+      command: helm version
+      register: helm_check
+      failed_when: helm_check.rc != 0
+
+    - name: Deploy Helm Chart for Backend Service
       command:
         cmd: helm upgrade --install backend-service ../../helm-charts/backend-service -n default
+      environment:
+        HELM_NAMESPACE: default
+      retries: 3
+      delay: 5
+      register: helm_deploy
+      failed_when: helm_deploy.rc != 0
+
+    - name: Check Helm release status
+      command:
+        cmd: helm status backend-service -n default
+      register: helm_status
+      retries: 5
+      delay: 10
+      failed_when: "'deployed' not in helm_status.stdout"
+
