@@ -4,8 +4,8 @@ set -euo pipefail  # Enable strict error handling
 set -x
 
 # Variables
-DOCKER_IMAGE_BACKEND="europe-west2-docker.pkg.dev/my-app-361806/cloud-test/backend-service"
-DOCKER_IMAGE_DATA="europe-west2-docker.pkg.dev/my-app-361806/cloud-test/data-service"
+DOCKER_IMAGE_BACKEND="${DOCKER_IMAGE_BACKEND:-europe-west2-docker.pkg.dev/my-app-361806/cloud-test/backend-service}"
+DOCKER_IMAGE_DATA="${DOCKER_IMAGE_BACKEND:-europe-west2-docker.pkg.dev/my-app-361806/cloud-test/data-service}"
 
 DOCKER_IMAGE_TAG_BACKEND="${DOCKER_IMAGE_TAG_BACKEND:-latest}"  # Tag for backend service
 DOCKER_IMAGE_TAG_DATA="${DOCKER_IMAGE_TAG_DATA:-latest}"       # Tag for data service
